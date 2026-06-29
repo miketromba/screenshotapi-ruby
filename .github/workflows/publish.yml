@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -27,6 +28,16 @@ jobs:
 
       - run: bundle exec rake test
       - run: gem build screenshotapi.gemspec
+
+      - name: Verify version is tagged (when publishing)
+        if: github.event.inputs.publish == 'publish'
+        run: |
+          version="$(ruby -e 'require_relative "lib/screenshotapi/version"; print ScreenshotAPI::VERSION')"
+          if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
+            echo "::error::No git tag v${version} found. Tag the release commit (git tag v${version} && git push origin v${version}) before publishing."
+            exit 1
+          fi
+          echo "Publishing version ${version} (tag v${version} present)."
 
       - name: Publish to RubyGems
         if: github.event.inputs.publish == 'publish'

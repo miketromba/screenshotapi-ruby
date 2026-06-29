@@ -162,6 +162,7 @@ Returns `ScreenshotAPI::Result`.
 | `remove_popups` | `Boolean` | No | `false` | Remove common popups and overlays. |
 | `mockup_device` | `String` | No | - | `"browser"`, `"iphone"`, or `"macbook"`. |
 | `geo_latitude`, `geo_longitude`, `geo_accuracy` | `Number` | No | - | Browser geolocation override for GET requests. |
+| `geo_location` | `Hash` | No | - | Geolocation override as an object (`{ latitude:, longitude:, accuracy: }`) for HTML/POST requests. |
 
 ### `client.save(path:, **options)`
 
