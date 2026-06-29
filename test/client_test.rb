@@ -200,7 +200,7 @@ class ClientTest < Minitest::Test
   end
 
   def test_handles_insufficient_credits_error_with_balance
-    response = error_response(402, JSON.generate("error" => "Not enough credits", "balance" => 5))
+    response = error_response(402, JSON.generate("error" => "Not enough credits", "creditBalance" => 5))
 
     with_fake_http(response) do
       error = assert_raises(ScreenshotAPI::InsufficientCreditsError) do
