@@ -1,9 +1,6 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       publish:
@@ -28,15 +25,9 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
 
-      - name: Verify tag matches gem version
-        if: github.event_name == 'push'
-        run: |
-          version="$(ruby -Ilib -rscreenshotapi/version -e 'puts ScreenshotAPI::VERSION')"
-          test "${GITHUB_REF_NAME}" = "v${version}"
-
       - run: bundle exec rake test
       - run: gem build screenshotapi.gemspec
 
       - name: Publish to RubyGems
-        if: github.event_name == 'push' || github.event.inputs.publish == 'publish'
+        if: github.event.inputs.publish == 'publish'
         uses: rubygems/release-gem@v1

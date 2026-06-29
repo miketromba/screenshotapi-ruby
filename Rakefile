@@ -4,7 +4,7 @@ require "rake/testtask"
 gem_helper = Bundler::GemHelper.new
 class << gem_helper
   def version_tag
-    "ruby-sdk-v#{version}"
+    "v#{version}"
   end
 end
 gem_helper.install
