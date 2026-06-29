@@ -5,6 +5,11 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Type "publish" to publish this version to RubyGems.
+        required: true
+        default: dry-run
 
 jobs:
   push:
@@ -32,4 +37,6 @@ jobs:
       - run: bundle exec rake test
       - run: gem build screenshotapi.gemspec
 
-      - uses: rubygems/release-gem@v1
+      - name: Publish to RubyGems
+        if: github.event_name == 'push' || github.event.inputs.publish == 'publish'
+        uses: rubygems/release-gem@v1
