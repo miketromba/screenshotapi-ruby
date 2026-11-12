@@ -16,12 +16,12 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.4.0
         with:
           persist-credentials: false
           fetch-depth: 0
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1.338.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -41,4 +41,4 @@ jobs:
 
       - name: Publish to RubyGems
         if: github.event.inputs.publish == 'publish'
-        uses: rubygems/release-gem@v1
+        uses: rubygems/release-gem@v1.4.1
